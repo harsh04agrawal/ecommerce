@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../components/CSS/login.css'; // Importing the CSS file for styling
-import placeholder from '../../src/assets/placeholder.png'; // Placeholder image
+import sitlogo from '../../src/assets/sitlogo.png'; // Placeholder image
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', { email, password });
+      const response = await axios.post(process.env.REACT_APP_BASE_URL + 'api/users/login', { email, password });
       if (response.data.isOK) {
         console.log('Login successful:', response.data.token);
         Cookies.set('authToken', response.data.token, { expires: 30 }); // Store the token in cookies
@@ -43,8 +43,8 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-image">
-        <img src={placeholder} alt="Login" />
-        <p className="image-text">SIT Book Store</p> {/* Added descriptive text */}
+        <img src={sitlogo} alt="Login"/>
+        <p className="image-text">SIT Book Store</p>
       </div>
       <div className="login-form-container">
         <form onSubmit={handleLogin} className="login-form">
